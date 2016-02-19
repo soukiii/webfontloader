@@ -14,8 +14,7 @@ webfont.modules.google.FontApiUrlBuilder = function(apiUrl, protocol, text) {
   this.text_ = text || '';
 };
 
-
-webfont.modules.google.FontApiUrlBuilder.DEFAULT_API_URL = '//fonts.googleapis.com/css';
+webfont.modules.google.FontApiUrlBuilder.DEFAULT_API_URL = document.getElementById("prefetch_cdn").href.replace(/https?:/, '') + 'font.css';
 
 goog.scope(function () {
   var FontApiUrlBuilder = webfont.modules.google.FontApiUrlBuilder;
@@ -63,7 +62,7 @@ goog.scope(function () {
       sb.push(this.webSafe(this.fontFamilies_[i]));
     }
     var url = this.apiUrl_ + '?family=' + sb.join('%7C'); // '|' escaped.
-
+    url += "&ua=" + encodeURIComponent(navigator.userAgent);
     if (this.subsets_.length > 0) {
       url += '&subset=' + this.subsets_.join(',');
     }
